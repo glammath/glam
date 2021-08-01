@@ -1,0 +1,72 @@
+.button-disabled {
+    fill: #911f00;
+}
+
+.button-enabled {
+    fill: #009b21;
+}
+
+.left-sidebar {
+    border: 2px solid #c35400;
+    background-color: #404040;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.function-entry-container {
+    border: 1px solid #c35400;
+    width: 100%;
+    height: 1in;
+    display: inline-grid;
+    grid-column-gap: 2px;
+    grid-template: 18pt auto / 50px auto 25px;
+    padding-top: 2px
+}
+
+.function-control-panel {
+    grid-column: 1;
+    grid-row: 1 / 2;
+}
+
+.function-input-line {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.function-pretty {
+    grid-column: 2;
+    grid-row: 2;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 100%;
+    color: ghostwhite;
+    padding-top: 2px;
+}
+
+.function-color-button {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    border-style: none;
+    margin-left: 5px;
+}
+
+.function-play-button {
+    background: transparent;
+    cursor: pointer;
+    border-style: none;
+}
+
+.new-function-button-container {
+    grid-column: 2;
+    grid-row: 2;
+    text-align: center;
+    border: 1px solid #c35400;
+    width: 100%;
+}
+
+.function-delete-button-container {
+    grid-column: 3;
+    grid-row: 1;
+}

@@ -1,0 +1,58 @@
+.plot-grid-container {
+    background-color: #404040;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+}
+
+.plot-grid-major-label {
+    fill: #c35400;
+    font: bold 0.09px sans-serif;
+}
+
+.plot-grid-axis-line {
+    stroke: #808080;
+    stroke-width: 0.02;
+    fill: none;
+}
+
+.plot-grid-major-line {
+    stroke: #808080;
+    stroke-width: 0.02;
+    fill: none;
+}
+
+.plot-grid-minor-line {
+    stroke: #808080;
+    stroke-width: 0.01;
+    opacity: 0.5;
+    fill: none;
+}
+
+.plot-grid-container>p {
+    font-weight: bold;
+    color: #a84d00;
+    user-select: none;
+    padding: 2pt 0 0 0.25em;
+    white-space: nowrap;
+    display: inline;
+    position: absolute;
+    margin: 0;
+}
+
+.plot-space {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.plot-space .coordinate-y-flip {
+    transform: scaleY(-1);
+}
+
+.plot-space .coordinate-y-flip > text {
+    transform: scaleY(-1);
+}

@@ -1,0 +1,3 @@
+[submodule "core/local/src/binaryen"]
+	path = core/local/src/binaryen
+	url = https://github.com/WebAssembly/binaryen
