@@ -21,7 +21,7 @@ export const InfoDialog: React.FC<InfoDialogProps> = (props) => {
 
     return <Dialog className="bp3-dark info-dialog" title={`${pf.id}: ${pf.name}(${pf.parameterName})`} isOpen={props.isOpen} onClose={props.closeCallback}>
         <Tabs id="InfoTabs" className={Classes.DIALOG_BODY} vertical={true}>
-            <Tab id="style" title="Style" panel={<>
+            <Tab id="options" title="Options" panel={<>
                 <Label>
                     Opacity
                     <p />

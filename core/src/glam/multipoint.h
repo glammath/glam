@@ -97,13 +97,13 @@ public:
 
     /**
      * Resizes the multipoint bounds. Will resize the `values` vector as well, computing any new values required
-     * for the specified resolution. If not specified, the resolution is taken to be the inital resolution.
+     * for the specified resolution. If not specified, the resolution is taken to be the initial resolution.
      *
      * @param from left endpoint
      * @param to right endpoint
      * @param res number of sample points per unit distance
      */
-    void resize(const _domain_t &from, const _domain_t &to, uint32_t res = 0);
+    EMSCRIPTEN_KEEPALIVE void resize(const _domain_t &from, const _domain_t &to, uint32_t res = 0);
 };
 
 #endif //GLAM_MULTIPOINT_H

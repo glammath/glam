@@ -80,6 +80,10 @@ template <typename D, typename R> EMSCRIPTEN_KEEPALIVE emscripten::val multipoin
     return emscripten::val(emscripten::typed_memory_view(colors.length * 4, reinterpret_cast<uint8_t *>(colors.buffer)));
 }
 
+template <typename D, typename R> void multipoint<D, R>::resize(const _domain_t &from, const _domain_t &to, uint32_t res) {
+
+}
+
 template <> EMSCRIPTEN_KEEPALIVE void multipoint<mp_float, mp_complex>::inner_init(const _domain_t &from, const _domain_t &to,
                                                                                    uint32_t res) {
     GLAM_TRACE("inner init mp (R->C)");
@@ -119,10 +123,3 @@ template <> EMSCRIPTEN_KEEPALIVE void multipoint<std::complex<double>, std::comp
     GLAM_TRACE("initialized with " << samples.size() << " samples.");
 }
 
-template <> void multipoint<mp_float, mp_complex>::resize(const _domain_t &from, const _domain_t &to, uint32_t res) {
-
-}
-
-template <> void multipoint<mp_complex, mp_complex>::resize(const _domain_t &from, const _domain_t &to, uint32_t res) {
-
-}
