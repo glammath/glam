@@ -1,3 +1,6 @@
 [submodule "core/local/src/binaryen"]
 	path = core/local/src/binaryen
 	url = https://github.com/WebAssembly/binaryen
+[submodule "ui/deploy"]
+	path = ui/deploy
+	url = git@github.com:glammath/glammath.github.io.git

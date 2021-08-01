@@ -11,13 +11,13 @@ if(DEFINED ENV{EMSDK})
 
     include_directories(${LOCAL_DIR}/include ${LOCAL_DIR}/src/binaryen/src)
 
-    add_executable(glamcore src/glam/types.cpp src/glam/multipoint.cpp src/glam/utilities.cpp src/glam/colors.h src/glam/morphemes.h src/glam/web/bindings.cpp src/glam/web/glamcore.cpp src/glam/fxn.cpp src/glam/jit/globals.cpp src/glam/jit/math_compiler.cpp src/glam/morphemes.cpp src/glam/builtins/elliptic.h)
+    add_executable(glamcore src/glam/types.cpp src/glam/multipoint.cpp src/glam/utilities.cpp src/glam/colors.h src/glam/morphemes.h src/glam/web/bindings.cpp src/glam/web/glamcore.cpp src/glam/fxn.cpp src/glam/jit/globals.cpp src/glam/jit/math_compiler.cpp src/glam/morphemes.cpp)
     target_link_libraries(glamcore ${LOCAL_DIR}/lib/libgmp.a ${LOCAL_DIR}/lib/libmpc.a ${LOCAL_DIR}/lib/libmpfr.a ${LOCAL_DIR}/src/binaryen/lib/libbinaryen.a)
 
 
     set_target_properties(glamcore PROPERTIES
             COMPILE_FLAGS "--bind -s USE_BOOST_HEADERS=1"
-            LINK_FLAGS "--bind -s USE_BOOST_HEADERS=1 --export-table --growable-table -s ALLOW_TABLE_GROWTH=1 -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_RUNTIME_METHODS=addFunction,ccall -s EXPORT_NAME=\"'GlamCore'\" --extern-pre-js ${PROJECT_SOURCE_DIR}/pre.js -s ENVIRONMENT=web")
+            LINK_FLAGS "--bind -s USE_BOOST_HEADERS=1 --export-table --growable-table -s ALLOW_TABLE_GROWTH=1 -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_RUNTIME_METHODS=addFunction,ccall -s ENVIRONMENT=web")
 else()
     add_library(glamcore SHARED src/glam/types.h src/glam/types.cpp src/glam/multipoint.cpp src/glam/multipoint.h src/glam/utilities.cpp src/glam/utilities.h)
     target_link_libraries(glamcore ${Boost_MULTIPRECISION_LIBRARY} ${Boost_NUMERIC_LIBRARY} gmp mpfr mpc)

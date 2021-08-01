@@ -46,7 +46,7 @@ export const FunctionEntry: React.FC<FunctionEntryProps> = (props) => {
                 if (semanticParser.error) {
                     console.error(semanticParser.error)
                 } else {
-                    console.log(semanticParser.stack)
+                    console.debug(semanticParser.stack)
                 }
             }
         }
