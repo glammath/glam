@@ -28,6 +28,7 @@ export interface Fxn {
 export interface MathCompilerDP {
     new(name: string, fxnName: string, parameterName: string): MathCompilerDP
     compile(stack: StackObject[]): Fxn
+    delete(): void
 }
 
 export interface GlamCoreModule extends EmscriptenModule {

@@ -4,6 +4,7 @@ import {FunctionEntry, NewFunctionEntry} from "./FunctionEntry";
 import "./LeftSidebar.css"
 import AsciiMathParser from "../AsciiMathParser";
 import {ProtofunctionType} from "../ProtofunctionContext";
+import {AnchorButton} from "@blueprintjs/core";
 
 interface SidebarProps {
     drawCallback: (id: number, remove: boolean) => void
@@ -15,7 +16,10 @@ export const LeftSidebar: React.FC<SidebarProps> = (props) => {
     const [activePfs, setActivePfs] = useState<Map<number, ProtofunctionType>>(new Map())
 
     return <div className="left-sidebar">
-        <p>there will be something here eventually i promise</p>
+        <div style={{padding: "2px" }}>
+            <AnchorButton icon="info-sign" text={"Github"} href={"https://github.com/glammath/glam"} target={"_blank"}/>
+            <span style={{paddingLeft: "25%", font: "14pt bold"}}>Glam</span>
+        </div>
         {activePfs.size > 0
             ? [...activePfs].map(pair => <FunctionEntry key={pair[0]} n={pair[0]} removeCallback={() => {
                 setActivePfs(pfs => {

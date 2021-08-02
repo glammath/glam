@@ -27,6 +27,7 @@ export const FunctionEntry: React.FC<FunctionEntryProps> = (props) => {
     const prettyRef = useRef<HTMLDivElement>(null)
     const [compiling, setCompiling] = useState(false)
     const [functionSourceOpen, setFunctionSourceOpen] = useState(false)
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         if (inputRef.current && prettyRef.current) {
@@ -43,9 +44,10 @@ export const FunctionEntry: React.FC<FunctionEntryProps> = (props) => {
                     stack: semanticParser.stack,
                     functionName: semanticParser.generateFunctionName()
                 })
-                if (semanticParser.error) {
-                    console.error(semanticParser.error)
+                if (semanticParser.error || (inputRef.current.value !== "" && semanticParser.stack.length === 0)) {
+                    setError(semanticParser.error || "syntax error")
                 } else {
+                    setError(null)
                     console.debug(semanticParser.stack)
                 }
             }
@@ -60,6 +62,7 @@ export const FunctionEntry: React.FC<FunctionEntryProps> = (props) => {
                     const fxn = compiler.compile(pf.stack);
                     updatePf({jitFunction: fxn})
                     jitCache[pf.functionName] = fxn;
+                    compiler.delete()
                 } else {
                     console.debug("cache hit for " + jitCache[pf.functionName])
                     updatePf({jitFunction: jitCache[pf.functionName]})
@@ -99,6 +102,7 @@ export const FunctionEntry: React.FC<FunctionEntryProps> = (props) => {
         </div>
         <input ref={inputRef} className="function-input-line" onInput={(event) => updatePf({text: (event.target as HTMLInputElement).value})}/>
         <div ref={prettyRef} className="function-pretty" />
+        {error === null ? <></> : <div className="function-error">{error}</div>}
         <div className="function-delete-button-container">
             <Button minimal small={true} icon="small-cross" intent={Intent.DANGER} onClick={() => {
                 props.drawCallback(pf.id, true)

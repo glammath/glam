@@ -406,6 +406,7 @@ void function_visitor::visit_unwrap() {
         loadIm->type = wasm::Type::f64;
         loadIm->offset = 8; // get the imaginary part first
         loadIm->bytes = 8;
+        loadIm->isAtomic = false;
         visit_basic(loadIm);
 
         auto localSet = parent->module->allocator.alloc<wasm::LocalSet>();
@@ -416,6 +417,7 @@ void function_visitor::visit_unwrap() {
         loadRe->type = wasm::Type::f64;
         loadRe->offset = 0;
         loadRe->bytes = 8;
+        loadRe->isAtomic = false;
         visit_basic(loadRe);
 
         auto localGet1 = parent->module->allocator.alloc<wasm::LocalGet>();

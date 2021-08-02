@@ -133,7 +133,7 @@ export class FunctionDefinitionVisitor implements ExpressionVisitor {
                 this.visit(expr.exprs[0])
                 return
             } else if (expr.exprs.length === 2) {
-                if (expr.exprs[0].ttype === "arbitrary_constant") {
+                if (expr.exprs[0].ttype === "arbitrary_constant" || expr.exprs[0].ttype === "other_constant") {
                     this.visit(expr.exprs[1])
                     this.visitObject({type: StackObjectType.OPERATOR, value: expr.exprs[0].tex}) // todo this is wrong
                     return
@@ -143,8 +143,7 @@ export class FunctionDefinitionVisitor implements ExpressionVisitor {
 
         if (expr.dash) {
             this.visit((expr as AMIntermediateExpression).expression)
-            this.visitLiteral("-1")
-            this.visitObject({type: StackObjectType.OPERATOR, value: "\\cdot"})
+            this.visitObject({type: StackObjectType.OPERATOR, value: "-"})
             return
         }
 
@@ -214,7 +213,7 @@ export class FunctionDefinitionVisitor implements ExpressionVisitor {
         if (leftExpr.ttype === "literal" || leftExpr.ttype === "intermediate" || leftExpr.ttype === "bracket" || leftExpr.ttype === "fraction" || leftExpr.ttype === "greek") {
             if (rightExpr.ttype === "expression") {
                 if (rightExpr.exprs![1].tex.startsWith("+") || rightExpr.exprs![1].tex.startsWith("-")) {
-                    this.visitBinaryOperation(leftExpr, "-", rightExpr.exprs![0])
+                    this.visitBinaryOperation(leftExpr, "\\cdot", rightExpr.exprs![0])
                     this.visit(rightExpr.exprs![1])
                     return
                 }
@@ -304,6 +303,10 @@ export class FunctionDefinitionVisitor implements ExpressionVisitor {
     }
 
     visitFractionPart(expr: AMExpression) {
+        if (!expr) {
+            this.parser.abort("incomplete fraction")
+            return
+        }
         if (expr.ttype && expr.ttype === "literal") {
             this.visit(expr)
         } else {
