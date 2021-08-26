@@ -17,6 +17,9 @@ EM_CONFIG=/home/user/emsdk/.emscripten
 EMSDK_NODE=/home/user/emsdk/node/14.15.5_64bit/bin/node
 BINARYEN_ROOT=/home/user/emsdk/binaryen/main_64bit_binaryen
 ```
+ - `mathquill` is also included as a git submodule. After updating submodules, use the `buildMathquill.sh` script to
+compile it.
+
 #### Core Dependencies
 The core module has several dependencies that must be built locally.
    1. Navigate to `core/` and make a build directory (`mkdir build`),
@@ -45,6 +48,6 @@ To run a local development server, run `yarn start`. To make a production build,
 use `yarn build`.
 
 ### Acknowledgements
-Glam bundles the `asciimath2tex` library, created by Christian Lawson-Perfect, 
+An older version of Glam bundled the `asciimath2tex` library, created by Christian Lawson-Perfect, 
 available [here](https://github.com/christianp/asciimath2tex). It is licensed under
 the Apache License 2.0.

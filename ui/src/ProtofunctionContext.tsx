@@ -8,7 +8,7 @@ import React, {
     useReducer,
     useState
 } from "react";
-import {StackObject} from "./ExpressionParser";
+import {StackObject} from "./components/MathQuillField";
 import {Fxn} from "./GlamCore";
 
 export enum ProtofunctionType {

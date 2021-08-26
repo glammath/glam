@@ -111,7 +111,7 @@ export const ColorPlot: React.FC<PlotObjectChildProps> = (props) => {
             canvas.height = height
             console.debug("plot: " + width + "x" + height)
 
-            const buffer = new Uint8ClampedArray(colors)
+            const buffer = new Uint8ClampedArray(colors) // unfortunately we need to copy the color buffer here, but it's okay.
             const imageData = new ImageData(buffer, width)
             ctx.putImageData(imageData, 0, 0)
             return canvas.toDataURL("image/png")

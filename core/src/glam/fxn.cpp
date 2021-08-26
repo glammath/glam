@@ -15,6 +15,7 @@
  */
 
 #include "fxn.h"
+#include "jit/globals.h"
 #include <emscripten.h>
 #include <binaryen-c.h>
 
@@ -38,6 +39,7 @@ template <typename T> void compiled_fxn<T>::install(module_ptr mod, size_t mod_l
 
     this->handle = reinterpret_cast<functor *>(handle_ptr);
     GLAM_TRACE("installed " << this->name << " at " << this->handle << " = " << handle_ptr);
+    globals::fxn_table[this->fxn_name] = handle_ptr;
     auto readModule = BinaryenModuleRead(static_cast<char *>(mod), mod_len);
     auto text = BinaryenModuleAllocateAndWriteText(readModule);
     this->disassembly = text;

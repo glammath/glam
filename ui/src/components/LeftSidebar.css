@@ -45,12 +45,28 @@
     padding-top: 2px;
 }
 
+.function-input {
+    grid-column: 2;
+    grid-row: 2;
+    overflow-x: auto;
+    overflow-y: hidden;
+    color: ghostwhite;
+    padding-top: 2px;
+    border: none ghostwhite;
+}
+
+.function-input .mq-cursor {
+    color: ghostwhite;
+}
+
 .function-error {
     grid-column: 2 / 3;
     grid-row: 3;
     padding: 2px;
-    color: red;
-    font: 12pt bold;
+    color: darkred;
+    background: #ee8686;
+    font: 9pt bold;
+    font-weight: bold;
 }
 
 .function-color-button {

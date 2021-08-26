@@ -1,8 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import {ProtofunctionType, useProtofunction} from "../ProtofunctionContext";
-import AsciiMathParser from "../AsciiMathParser";
-import katex from "katex"
-import {ExpressionParser} from "../ExpressionParser";
 import {Button, Intent} from "@blueprintjs/core";
 import "@blueprintjs/core/lib/css/blueprint.css"
 import "@blueprintjs/icons/lib/css/blueprint-icons.css"
@@ -10,11 +7,11 @@ import "../BP3Restyler.css"
 import {InfoDialog} from "./InfoDialog";
 import {NewArcIcon, NewPointIcon} from "./Icons";
 import {Fxn} from "../GlamCore";
+import {generateFunctionName, MathQuillField} from "./MathQuillField";
 
 interface FunctionEntryProps {
     n: number
     removeCallback: () => void
-    parser: AsciiMathParser
     drawCallback: (id: number, remove: boolean) => void
     type: ProtofunctionType
 }
@@ -28,31 +25,6 @@ export const FunctionEntry: React.FC<FunctionEntryProps> = (props) => {
     const [compiling, setCompiling] = useState(false)
     const [functionSourceOpen, setFunctionSourceOpen] = useState(false)
     const [error, setError] = useState<string | null>(null)
-
-    useEffect(() => {
-        if (inputRef.current && prettyRef.current) {
-            props.parser.input(inputRef.current.value)
-            const result = props.parser.consume()
-            katex.render(result.tex, prettyRef.current, {throwOnError: false, displayMode: true})
-            if (result.exprs[0]) {
-                const semanticParser = new ExpressionParser()
-                semanticParser.visit(result.exprs[0])
-                updatePf({
-                    name: semanticParser.functionName,
-                    parameterName: semanticParser.functionArg,
-                    text: inputRef.current.value,
-                    stack: semanticParser.stack,
-                    functionName: semanticParser.generateFunctionName()
-                })
-                if (semanticParser.error || (inputRef.current.value !== "" && semanticParser.stack.length === 0)) {
-                    setError(semanticParser.error || "syntax error")
-                } else {
-                    setError(null)
-                    console.debug(semanticParser.stack)
-                }
-            }
-        }
-    }, [pf.text, props.parser])
 
     useEffect(() => {
         if (pf.drawing) {
@@ -100,8 +72,20 @@ export const FunctionEntry: React.FC<FunctionEntryProps> = (props) => {
 
             <Button minimal icon="cog" disabled={!pf.jitFunction} onClick={event => setFunctionSourceOpen(true)} />
         </div>
+{/*
         <input ref={inputRef} className="function-input-line" onInput={(event) => updatePf({text: (event.target as HTMLInputElement).value})}/>
         <div ref={prettyRef} className="function-pretty" />
+*/}
+        <MathQuillField className="function-input" onError={setError} onSuccess={(stack, fxnName, fxnArg, raw) => {
+            setError(null)
+            updatePf({
+                name: fxnName,
+                parameterName: fxnArg,
+                text: raw,
+                stack: stack,
+                functionName: generateFunctionName(fxnName, fxnArg, stack)
+            })
+        }}/>
         {error === null ? <></> : <div className="function-error">{error}</div>}
         <div className="function-delete-button-container">
             <Button minimal small={true} icon="small-cross" intent={Intent.DANGER} onClick={() => {
@@ -129,3 +113,4 @@ export const NewFunctionEntry: React.FC<NewFunctionEntryProps> = (props) => {
             <Button id="new-fxn" minimal intent={Intent.SUCCESS} large={true} onClick={() => props.addFunction(ProtofunctionType.C2C)}><b>&#x2102;</b></Button>
         </div>
 }
+

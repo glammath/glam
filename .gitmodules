@@ -4,3 +4,6 @@
 [submodule "ui/deploy"]
 	path = ui/deploy
 	url = git@github.com:glammath/glammath.github.io.git
+[submodule "ui/mathquill"]
+	path = ui/mathquill
+	url = https://github.com/mathquill/mathquill

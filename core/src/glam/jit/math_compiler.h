@@ -118,6 +118,8 @@ public:
 
     void visit_f64x4(morpheme_f64x4 *morph);
 
+    void visit_fxncall(const std::string &name);
+
     std::string visit_end();
 };
 

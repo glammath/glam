@@ -20,6 +20,7 @@
 #include "../morphemes.h"
 #include "../multipoint.h"
 #include "../jit/math_compiler.h"
+#include "../jit/globals.h"
 
 EMSCRIPTEN_BINDINGS(glam_module) {
     emscripten::class_<color_buffer>("ColorBuffer").function("getBuffer", &color_buffer::get_buffer)
@@ -31,6 +32,8 @@ EMSCRIPTEN_BINDINGS(glam_module) {
 
     emscripten::class_<math_compiler_dp>("MathCompilerDP").constructor<std::string, std::string, std::string>()
                                                           .function("compile", &math_compiler_dp::compile);
+
+    emscripten::class_<globals>("Globals").class_function("isFxn", &globals::is_fxn).class_function("isGlobal", &globals::is_global);
 
 #define bind_fxn(fxn_type, type, name) emscripten::class_<fxn<type, fxn_type<type>>>(name) \
     .function("ready", &fxn<type, fxn_type<type>>::ready) \

@@ -27,6 +27,9 @@ struct globals {
     static std::map<std::string, mp_complex *> consts_mp;
     static std::map<std::string, std::complex<double>> consts_dp;
     static std::map<std::string, uintptr_t> fxn_table;
+
+    static bool is_global(const std::string &name);
+    static bool is_fxn(const std::string &name);
 };
 
 #endif //GLAMCORE_GLOBALS_H

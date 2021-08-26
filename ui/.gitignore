@@ -25,5 +25,8 @@ yarn.lock
 
 public/glamcore.wasm
 public/glamcore.js
+public/fonts/
+public/mathquill.css
+public/mathquill.js
 
 .idea/

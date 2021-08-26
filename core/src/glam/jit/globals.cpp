@@ -23,3 +23,11 @@ std::map<std::string, std::complex<double>> globals::consts_dp = { std::make_pai
         std::make_pair("\\pi", std::complex(M_PI, 0.)), std::make_pair("i", std::complex(0., 1.)) };
 
 std::map<std::string, uintptr_t> globals::fxn_table;
+
+bool globals::is_fxn(const std::string &name) {
+    return fxn_table.count(name);
+}
+
+bool globals::is_global(const std::string &name) {
+    return consts_dp.count(name) || consts_mp.count(name);
+}

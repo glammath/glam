@@ -451,6 +451,26 @@ void function_visitor::visit_f64x4(morpheme_f64x4 *morph) {
     needs_unwrap = true;
 }
 
+void function_visitor::visit_fxncall(const std::string &name) {
+    uintptr_t ptr = globals::fxn_table[name];
+    assert(ptr); // should never fail, the parser checks first
+    GLAM_COMPILER_TRACE("visit_fxncall " << name << " @ " << ptr);
+
+    auto c = parent->module->allocator.alloc<wasm::Const>();
+    c->type = wasm::Type::i32;
+    c->value = wasm::Literal(static_cast<uint32_t>(ptr));
+    visit_basic(c);
+
+    // todo for now we assume that it's also a double-precision fxn, i.e. it is (f64, f64)->i32
+    auto callIndirect = parent->module->allocator.alloc<wasm::CallIndirect>();
+    callIndirect->isReturn = false;
+    callIndirect->sig = wasm::Signature({ wasm::Type::f64, wasm::Type::f64 }, wasm::Type::i32);
+    callIndirect->table = "table";
+    callIndirect->type = wasm::Type::i32;
+    visit_basic(callIndirect);
+    needs_unwrap = true;
+}
+
 bool function_visitor::visit_variable_dp(const std::string &name) {
     GLAM_COMPILER_TRACE("visit_variable_dp " << name);
     visit_unwrap();
@@ -533,7 +553,7 @@ void math_compiler_dp::visit_operator(function_visitor *fv, const std::string &o
     } else if (op == "-") {
         fv->visit_sub();
         return;
-    } else if (op == "\\cdot") {
+    } else if (op == "*") {
         fv->visit_mul();
         return;
     } else if (op == "/") {
@@ -579,6 +599,9 @@ fxn<std::complex<double>, compiled_fxn<std::complex<double>>> math_compiler_dp::
                 break;
             case 2: // OPERATOR
                 visit_operator(fv, value);
+                break;
+            case 3: // FXNCALL
+                fv->visit_fxncall(value);
                 break;
             default:
                 GLAM_COMPILER_TRACE("unrecognized stack object " << type);

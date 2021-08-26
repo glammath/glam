@@ -1,5 +1,5 @@
-import {StackObject} from "./ExpressionParser";
 import React from "react";
+import {StackObject} from "./components/MathQuillField";
 
 export type ptr = number
 export type f64 = number
@@ -31,12 +31,18 @@ export interface MathCompilerDP {
     delete(): void
 }
 
+export interface Globals {
+    isFxn(name: string): boolean
+    isGlobal(name: string): boolean
+}
+
 export interface GlamCoreModule extends EmscriptenModule {
     MathCompilerDP: MathCompilerDP
     RealMultipointMP: Multipoint<number>
     ComplexMultipointMP: Multipoint<complex>
     RealMultipointDP: Multipoint<number>
     ComplexMultipointDP: Multipoint<complex>
+    Globals: Globals
     ccall: typeof ccall
 }
 
